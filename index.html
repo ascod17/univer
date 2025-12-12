@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="kz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кіру | UNIVER</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --univer-blue: #003366;
+            --univer-dark: #123456;
+            --univer-light: #0056b3;
+            --univer-accent: #e9f2ff;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            width: 100%;
+            max-width: 900px;
+        }
+        
+        .login-left {
+            background: linear-gradient(135deg, var(--univer-blue), var(--univer-light));
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .login-right {
+            padding: 40px;
+        }
+        
+        .univer-logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .univer-logo i {
+            color: #4dabf7;
+        }
+        
+        .form-control {
+            border-radius: 8px;
+            padding: 12px 15px;
+            border: 1px solid #dee2e6;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--univer-light);
+            box-shadow: 0 0 0 0.25rem rgba(0, 86, 179, 0.25);
+        }
+        
+        .btn-login {
+            background: linear-gradient(135deg, var(--univer-blue), var(--univer-light));
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 86, 179, 0.3);
+        }
+        
+        .login-links a {
+            color: var(--univer-light);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .login-links a:hover {
+            color: var(--univer-blue);
+            text-decoration: underline;
+        }
+        
+        .alert {
+            border-radius: 8px;
+            border: none;
+        }
+        
+        .welcome-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-top: 20px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 30px;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-list i {
+            margin-right: 10px;
+            color: #4dabf7;
+        }
+        
+        @media (max-width: 768px) {
+            .login-container {
+                margin: 20px;
+            }
+            
+            .login-left, .login-right {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="row g-0">
+            <!-- Сол жақ бөлім - Информация -->
+            <div class="col-lg-6">
+                <div class="login-left">
+                    <div class="univer-logo">
+                        <i class="fas fa-graduation-cap me-2"></i>UNIVER
+                    </div>
+                    <h2>Қош келдіңіз!</h2>
+                    <p class="welcome-text">
+                        Әл-фараби атындағы Қазақ Ұлттық Университетінің электрондық білім беру жүйесіне қош келдіңіз.
+                    </p>
+                    
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check-circle"></i> Жеке кабинет</li>
+                        <li><i class="fas fa-check-circle"></i> Электрондық кітапхана</li>
+                        <li><i class="fas fa-check-circle"></i> Онлайн курстар</li>
+                        <li><i class="fas fa-check-circle"></i> Бағалау жүйесі</li>
+                        <li><i class="fas fa-check-circle"></i> Академиялық кесте</li>
+                    </ul>
+                    
+                    <div class="mt-4">
+                        <small>Жүйе тестілеу кезеңінде өтуде. Кез-келген қателіктер туралы <a href="mailto:it@kaznu.kz" style="color: #a3d5ff;">it@kaznu.kz</a> хабарласыңыз.</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Оң жақ бөлім - Кіру формасы -->
+            <div class="col-lg-6">
+                <div class="login-right">
+                    <h3 class="mb-4 text-center">Жүйеге кіру</h3>
+                    
+                    <?php if (isset($_SESSION['login_error'])): ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <?php echo $_SESSION['login_error']; ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                        <?php unset($_SESSION['login_error']); ?>
+                    <?php endif; ?>
+                    
+                    <?php if (isset($_SESSION['just_registered'])): ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="fas fa-check-circle me-2"></i>
+                            Тіркелу сәтті аяқталды! Енді логин және пароль арқылы жүйеге кіре аласыз.
+                            <?php if (isset($_SESSION['tmp_username'])): ?>
+                                <br><small>Сіздің логиніңіз: <strong><?php echo $_SESSION['tmp_username']; ?></strong></small>
+                            <?php endif; ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                        <?php unset($_SESSION['just_registered']); ?>
+                        <?php unset($_SESSION['tmp_username']); ?>
+                    <?php endif; ?>
+                    
+                    <?php if (isset($_SESSION['password_reset_success'])): ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="fas fa-check-circle me-2"></i>
+                            <?php echo $_SESSION['password_reset_success']; ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                        <?php unset($_SESSION['password_reset_success']); ?>
+                    <?php endif; ?>
+                    
+                    <form action="login.php" method="POST">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">
+                                <i class="fas fa-user me-1"></i>Логин
+                            </label>
+                            <input type="text" class="form-control" id="username" name="username" 
+                                   placeholder="Логин енгізіңіз" required>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="password" class="form-label">
+                                <i class="fas fa-lock me-1"></i>Пароль
+                            </label>
+                            <input type="password" class="form-control" id="password" name="password" 
+                                   placeholder="Пароль енгізіңіз" required>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="remember">
+                            <label class="form-check-label" for="remember">Мені есте сақтау</label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-login w-100 mb-3">
+                            <i class="fas fa-sign-in-alt me-2"></i>Кіру
+                        </button>
+                        
+                        <div class="login-links text-center mb-3">
+                            <a href="forgot_password.php">
+                                <i class="fas fa-key me-1"></i>Парольді ұмыттыңыз ба?
+                            </a>
+                        </div>
+                        
+                        <div class="text-center">
+                            <p class="mb-0">Аккаунтыңыз жоқ па?</p>
+                            <a href="register.php" class="btn btn-outline-primary mt-2">
+                                <i class="fas fa-user-plus me-2"></i>Тіркелу
+                            </a>
+                        </div>
+                    </form>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="text-center">
+                        <small class="text-muted">
+                            Жүйеге кіру арқылы сіз 
+                            <a href="#" class="text-decoration-none">Пайдаланушы келісімімен</a> 
+                            келісесіз
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Парольді көрсету/жасыру
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('password');
+            const togglePassword = document.createElement('button');
+            togglePassword.type = 'button';
+            togglePassword.innerHTML = '<i class="fas fa-eye"></i>';
+            togglePassword.className = 'btn btn-outline-secondary position-absolute end-0 top-0 h-100';
+            togglePassword.style.borderTopLeftRadius = '0';
+            togglePassword.style.borderBottomLeftRadius = '0';
+            
+            const passwordGroup = passwordInput.parentElement;
+            passwordGroup.style.position = 'relative';
+            passwordInput.style.paddingRight = '50px';
+            
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+            });
+            
+            passwordGroup.appendChild(togglePassword);
+            
+            // Формаға фокус
+            document.getElementById('username').focus();
+        });
+    </script>
+</body>
+</html>
