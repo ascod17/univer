@@ -1,0 +1,42 @@
+{
+    "db": {
+        "id": "db",
+        "name": "Деректер қоры жүйелерін құру",
+        "code": "CS-401",
+        "teacher": "Айгүл М.",
+        "description": "Реляциялық деректер қорлары, SQL тілі, қауіпсіздік",
+        "time_limit": 20,
+        "total_questions": 3,
+        "total_score": 4
+    },
+    "cloud": {
+        "id": "cloud",
+        "name": "Бұлттық есептеулерге кіріспе",
+        "code": "CS-402",
+        "teacher": "Нұрлан С.",
+        "description": "Бұлттық архитектуралар, сервистер, қауіпсіздік",
+        "time_limit": 15,
+        "total_questions": 2,
+        "total_score": 3
+    },
+    "python": {
+        "id": "python",
+        "name": "есептеу әдістері",
+        "code": "cs-403",
+        "teacher": "Нұрлан С.",
+        "description": "срс код",
+        "time_limit": 15,
+        "total_questions": 0,
+        "total_score": 0
+    },
+    "123": {
+        "id": "123",
+        "name": "c++",
+        "code": "cs-401",
+        "teacher": "Нұрлан С.",
+        "description": "asdfgbhn",
+        "time_limit": 12,
+        "total_questions": 3,
+        "total_score": 3
+    }
+}

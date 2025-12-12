@@ -1,0 +1,105 @@
+{
+    "db": [
+        {
+            "id": 1,
+            "question": "Реляциялық деректер қоры дегеніміз не?",
+            "options": {
+                "a": "Деректерді кесте түрінде ұйымдастыру",
+                "b": "Деректерді график түрінде сақтау",
+                "c": "Деректерді текст файлында сақтау",
+                "d": "Деректерді Excel-де сақтау"
+            },
+            "correct": "a",
+            "score": 2
+        },
+        {
+            "id": 2,
+            "question": "SQL сөзінің ашылуы қандай?",
+            "options": {
+                "a": "Structured Query Language",
+                "b": "Simple Question Language",
+                "c": "System Query Logic",
+                "d": "Standard Question Logic"
+            },
+            "correct": "a",
+            "score": 1
+        },
+        {
+            "id": 3,
+            "question": "Қайсысы SQL командасы емес?",
+            "options": {
+                "a": "SELECT",
+                "b": "UPDATE",
+                "c": "DELETE",
+                "d": "PRINT"
+            },
+            "correct": "d",
+            "score": 1
+        }
+    ],
+    "cloud": [
+        {
+            "id": 1,
+            "question": "Бұлттық есептеулердің негізгі артықшылығы қандай?",
+            "options": {
+                "a": "Төмен құны",
+                "b": "Масштабтану мүмкіндігі",
+                "c": "Екінші екеуі де",
+                "d": "Ешқайсысы"
+            },
+            "correct": "c",
+            "score": 2
+        },
+        {
+            "id": 2,
+            "question": "IaaS дегеніміз не?",
+            "options": {
+                "a": "Инфрақұрылым ретіндегі сервис",
+                "b": "Интернет ретіндегі сервис",
+                "c": "Информация ретіндегі сервис",
+                "d": "Интеграция ретіндегі сервис"
+            },
+            "correct": "a",
+            "score": 1
+        }
+    ],
+    "python": [],
+    "123": [
+        {
+            "id": 1,
+            "question": "sdfghj",
+            "options": {
+                "a": "fvg",
+                "b": "gbn",
+                "c": "vb",
+                "d": "yuj"
+            },
+            "correct": "a",
+            "score": 1
+        },
+        {
+            "id": 2,
+            "question": "sdfghjkl",
+            "options": {
+                "a": "dfg",
+                "b": "fghj",
+                "c": "fghj",
+                "d": "fgh"
+            },
+            "correct": "a",
+            "score": 1
+        },
+        {
+            "id": 3,
+            "question": "wertyuikl cvbnm, fghjkl",
+            "options": {
+                "a": "xcv",
+                "b": "bn",
+                "c": "ghj",
+                "d": "ghj"
+            },
+            "correct": "b",
+            "score": 1
+        }
+    ]
+}

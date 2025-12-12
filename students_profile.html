@@ -1,0 +1,1147 @@
+
+
+<!DOCTYPE html>
+<html lang="kz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Студент профилі | UNIVER</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --univer-blue: #003366;
+            --univer-dark: #123456;
+            --univer-light: #0056b3;
+            --univer-accent: #e9f2ff;
+            --student-color: #1a73e8;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .top-info-bar {
+            background-color: var(--univer-dark);
+            color: white;
+            padding: 8px 0;
+            font-size: 0.9rem;
+        }
+        
+        .top-info-bar a {
+            color: #a3d5ff;
+            text-decoration: none;
+        }
+        
+        .top-info-bar a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        
+        .main-navbar {
+            background-color: var(--univer-blue);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: white !important;
+        }
+        
+        .navbar-brand i {
+            color: #4dabf7;
+        }
+        
+        .nav-link {
+            color: white !important;
+            padding: 10px 15px !important;
+            margin: 0 2px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .nav-link.active {
+            background-color: var(--univer-light) !important;
+        }
+        
+        .user-dropdown {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 5px 15px;
+        }
+        
+        .user-dropdown:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .welcome-card {
+            border-left: 5px solid var(--student-color);
+            border-radius: 8px;
+        }
+        
+        .content-card {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+            margin-bottom: 25px;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .card-header {
+            background-color: var(--univer-accent) !important;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-weight: 600;
+        }
+        
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s;
+        }
+        
+        .profile-avatar:hover {
+            transform: scale(1.05);
+        }
+        
+        .avatar-upload {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+        
+        .avatar-upload-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            color: white;
+        }
+        
+        .avatar-upload:hover .avatar-upload-overlay {
+            opacity: 1;
+        }
+        
+        .stat-card {
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            height: 100%;
+            transition: transform 0.3s;
+            background-color: white;
+            border: 1px solid #dee2e6;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: rgba(0, 86, 179, 0.05);
+        }
+        
+        .badge-student {
+            background-color: var(--student-color) !important;
+        }
+        
+        .student-highlight {
+            color: var(--student-color);
+            font-weight: 600;
+        }
+        
+        .footer {
+            background-color: var(--univer-dark);
+            color: white;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        
+        .progress {
+            height: 8px;
+            border-radius: 4px;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-avatar {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .stat-card {
+                padding: 15px;
+            }
+            
+            .stat-icon {
+                font-size: 2rem;
+            }
+            
+            .stat-number {
+                font-size: 1.5rem;
+            }
+        }
+        
+        .profile-tabs {
+            border-bottom: 2px solid #dee2e6;
+            margin-bottom: 25px;
+        }
+        
+        .profile-tab {
+            padding: 10px 25px;
+            border: none;
+            background: none;
+            font-weight: 600;
+            color: #6c757d;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .profile-tab.active {
+            color: var(--student-color);
+            border-bottom: 3px solid var(--student-color);
+        }
+        
+        .info-card {
+            border-left: 4px solid var(--student-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: white;
+            border: 1px solid #e9ecef;
+        }
+        
+        .info-card:hover {
+            border-color: var(--student-color);
+        }
+        
+        .academic-badge {
+            background: linear-gradient(135deg, var(--student-color), #34a853);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .avatar-option {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .avatar-option:hover {
+            border-color: var(--student-color);
+            transform: scale(1.1);
+        }
+        
+        .avatar-option.selected {
+            border-color: #28a745;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Верхняя информационная панель -->
+    <div class="top-info-bar">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <i class="fas fa-phone-alt me-1"></i> 8 (727) 123-45-67 | 
+                    <i class="fas fa-envelope ms-3 me-1"></i> <a href="mailto:info@univer.kz">info@univer.kz</a>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <i ></i> Әл-фараби атындағы Қазақ ұлттық университеті
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Основная навигация -->
+    <nav class="navbar navbar-expand-lg main-navbar sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="main.php">
+                <i class="fas fa-graduation-cap me-2"></i>UNIVER
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon">
+                    <i class="fas fa-bars text-white"></i>
+                </span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="main.php">
+                            <i class="fas fa-home me-1"></i> Басты бет
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="oqu_process.html">
+                            <i class="fas fa-book me-1"></i> Оқу процесі
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sabaq_keste.html">
+                            <i class="fas fa-calendar-alt me-1"></i> Кесте
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="student_profile.php">
+                            <i class="fas fa-user me-1"></i> Профиль
+                        </a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <a href="#" class="nav-link user-dropdown dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle me-1"></i> Нұрлан С.
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="student_profile.php"><i class="fas fa-user me-2"></i>Профиль</a></li>
+                            <li><a class="dropdown-item" href="settings.php"><i class="fas fa-cog me-2"></i>Баптаулар</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="../logout.php"><i class="fas fa-sign-out-alt me-2"></i>Шығу</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Основной контент -->
+    <main class="container my-4">
+        <!-- Приветствие -->
+        <div class="alert alert-success welcome-card" role="alert">
+            <div class="d-flex align-items-center">
+                <div class="me-3">
+                    <i class="fas fa-user-graduate fa-2x"></i>
+                </div>
+                <div>
+                    <h5 class="alert-heading mb-1">Студент профилі</h5>
+                    <p class="mb-0">Жеке ақпаратты басқару, академиялық деректерді қарау және статистиканы бақылау</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Основная информация -->
+        <div class="row">
+            <!-- Левая колонка - аватар и основная информация -->
+            <div class="col-lg-4">
+                <div class="content-card card mb-4">
+                    <div class="card-body text-center">
+                        <!-- Аватар -->
+                        <div class="avatar-upload mb-4" data-bs-toggle="modal" data-bs-target="#avatarModal">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Профиль суреті" class="profile-avatar" id="profileAvatar">
+                            <div class="avatar-upload-overlay">
+                                <div>
+                                    <i class="fas fa-camera fa-2x mb-2"></i>
+                                    <br>
+                                    <small>Суретті өзгерту</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- ФИО и информация -->
+                        <h3 class="mb-2">Нұрлан Сапарбекұлы</h3>
+                        <div class="academic-badge d-inline-block mb-3">
+                            <i class="fas fa-user-graduate me-1"></i> Бакалавр, 3 курс
+                        </div>
+                        
+                        <!-- Контактная информация -->
+                        <div class="info-card">
+                            <h6><i class="fas fa-id-card me-2 student-highlight"></i>Жеке ақпарат</h6>
+                            <ul class="list-unstyled mb-0">
+                                <li class="mb-2">
+                                    <i class="fas fa-envelope text-muted me-2"></i>
+                                    <strong>Email:</strong> nur.sapar@univer.kz
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-phone text-muted me-2"></i>
+                                    <strong>Телефон:</strong> +7 (777) 123-45-67
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-calendar-alt text-muted me-2"></i>
+                                    <strong>Туған күні:</strong> 15.03.2004
+                                </li>
+                                <li>
+                                    <i class="fas fa-map-marker-alt text-muted me-2"></i>
+                                    <strong>Мекен-жайы:</strong> Алматы, Абай көшесі 123
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Академическая информация -->
+                        <h6 class="mt-4 mb-3"><i class="fas fa-graduation-cap me-2"></i>Академиялық ақпарат</h6>
+                        <div class="info-card">
+                            <ul class="list-unstyled mb-0">
+                                <li class="mb-2">
+                                    <i class="fas fa-university text-muted me-2"></i>
+                                    <strong>Факультет:</strong> Компьютерлік ғылымдар
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-book text-muted me-2"></i>
+                                    <strong>Мамандық:</strong> Ақпараттық жүйелер
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-users text-muted me-2"></i>
+                                    <strong>Топ:</strong> IS-3201
+                                </li>
+                                <li>
+                                    <i class="fas fa-user-tie text-muted me-2"></i>
+                                    <strong>Эдвайзер:</strong> Досымбек А.М.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Достижения -->
+                <div class="content-card card">
+                    <div class="card-header">
+                        <h6 class="mb-0"><i class="fas fa-trophy me-2"></i>Жетістіктер</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-card mb-3">
+                            <h6><i class="fas fa-medal text-warning me-2"></i>GPA: 3.75</h6>
+                            <div class="progress mt-2">
+                                <div class="progress-bar bg-success" style="width: 85%">85%</div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card">
+                            <h6><i class="fas fa-award text-primary me-2"></i>Активтілік</h6>
+                            <div class="row text-center mt-2">
+                                <div class="col-6">
+                                    <h5 class="text-primary mb-1">24</h5>
+                                    <small>Пәндер</small>
+                                </div>
+                                <div class="col-6">
+                                    <h5 class="text-success mb-1">120</h5>
+                                    <small>Кредиттер</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Правая колонка - детальная информация -->
+            <div class="col-lg-8">
+                <!-- Статистика -->
+                <div class="row mb-4">
+                    <div class="col-md-3 col-sm-6 mb-3">
+                        <div class="stat-card">
+                            <div class="stat-icon text-primary">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="stat-number text-primary">6</div>
+                            <div class="stat-label">Ағымдағы пән</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-3">
+                        <div class="stat-card">
+                            <div class="stat-icon text-primary">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="stat-number text-primary">92%</div>
+                            <div class="stat-label">Қатысу</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-3">
+                        <div class="stat-card">
+                            <div class="stat-icon text-success">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="stat-number text-success">3.75</div>
+                            <div class="stat-label">GPA</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-3">
+                        <div class="stat-card">
+                            <div class="stat-icon text-info">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-number text-info">2</div>
+                            <div class="stat-label">Оқу жылы</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Табы профиля -->
+                <div class="profile-tabs">
+                    <button class="profile-tab active" data-tab="academic">Академиялық ақпарат</button>
+                    <button class="profile-tab" data-tab="grades">Бағалар</button>
+                    <button class="profile-tab" data-tab="schedule">Кесте</button>
+                    <button class="profile-tab" data-tab="documents">Құжаттар</button>
+                </div>
+                
+                <!-- Содержимое табов -->
+                <div id="academicContent" class="tab-content">
+                    <!-- Академическая информация -->
+                    <div class="content-card card">
+                        <div class="card-header">
+                            <h6 class="mb-0"><i class="fas fa-university me-2"></i>Академиялық ақпарат</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="info-card">
+                                        <h6><i class="fas fa-user-graduate me-2"></i>Оқу деректері</h6>
+                                        <ul class="list-unstyled mb-0">
+                                            <li class="mb-2">
+                                                <strong>Оқу түрі:</strong> Күндізгі<br>
+                                                <small class="text-muted">Бакалавр бағдарламасы</small>
+                                            </li>
+                                            <li class="mb-2">
+                                                <strong>Тіркелу күні:</strong> 01.09.2023<br>
+                                                <small class="text-muted">Бастапқы оқу жылы</small>
+                                            </li>
+                                            <li>
+                                                <strong>Күтілетін бітіру:</strong> 30.06.2027<br>
+                                                <small class="text-muted">Жалпы оқу мерзімі: 4 жыл</small>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info-card">
+                                        <h6><i class="fas fa-chart-line me-2"></i>Академиялық көрсеткіштер</h6>
+                                        <ul class="list-unstyled mb-0">
+                                            <li class="mb-2">
+                                                <strong>Толық кредит:</strong> 120/240<br>
+                                                <small class="text-muted">50% орындалды</small>
+                                            </li>
+                                            <li class="mb-2">
+                                                <strong>Академиялық орта:</strong> 3.75/4.0<br>
+                                                <small class="text-muted">Көктем семестрі 2024</small>
+                                            </li>
+                                            <li>
+                                                <strong>Профиль толтырылғандығы:</strong> 92%<br>
+                                                <small class="text-muted">Расталған</small>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Текущие курсы -->
+                            <h6 class="mt-4 mb-3"><i class="fas fa-book-open me-2"></i>Ағымдағы семестр пәндері</h6>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Пән коды</th>
+                                            <th>Пән атауы</th>
+                                            <th>Оқытушы</th>
+                                            <th>Кредит</th>
+                                            <th>Сағат</th>
+                                            <th>Статус</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>CS-301</td>
+                                            <td>Python бағдарламалау</td>
+                                            <td>Досымбек А.М.</td>
+                                            <td>5</td>
+                                            <td>90</td>
+                                            <td><span class="badge bg-success">Белсенді</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>CS-302</td>
+                                            <td>Деректер қоры жүйелері</td>
+                                            <td>Айгүл М.Қ.</td>
+                                            <td>4</td>
+                                            <td>75</td>
+                                            <td><span class="badge bg-success">Белсенді</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>CS-303</td>
+                                            <td>Веб-бағдарламалау</td>
+                                            <td>Марат Б.Т.</td>
+                                            <td>6</td>
+                                            <td>105</td>
+                                            <td><span class="badge bg-success">Белсенді</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>CS-304</td>
+                                            <td>Компьютерлік желілер</td>
+                                            <td>Нұрлан Ж.С.</td>
+                                            <td>4</td>
+                                            <td>75</td>
+                                            <td><span class="badge bg-success">Белсенді</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Бағалар -->
+                <div id="gradesContent" class="tab-content" style="display: none;">
+                    <div class="content-card card">
+                        <div class="card-header">
+                            <h6 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Академиялық бағалар</h6>
+                        </div>
+                        <div class="card-body">
+                            <!-- GPA прогресс -->
+                            <div class="info-card mb-4">
+                                <h6><i class="fas fa-chart-line me-2"></i>GPA динамикасы</h6>
+                                <div class="row">
+                                    <div class="col-md-3 text-center">
+                                        <h4 class="text-primary">3.75</h4>
+                                        <small>Ағымдағы GPA</small>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="progress mb-2" style="height: 20px;">
+                                            <div class="progress-bar bg-success" style="width: 85%">3.75/4.0</div>
+                                        </div>
+                                        <div class="d-flex justify-content-between small text-muted">
+                                            <span>1 курс: 3.45</span>
+                                            <span>2 курс: 3.65</span>
+                                            <span>3 курс: 3.75</span>
+                                            <span>4 курс: -</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Текущие оценки -->
+                            <h6 class="mb-3"><i class="fas fa-star me-2"></i>Ағымдағы семестр бағалары</h6>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Пән</th>
+                                            <th>Аралық 1</th>
+                                            <th>Аралық 2</th>
+                                            <th>Қосымша</th>
+                                            <th>Қорытынды</th>
+                                            <th>Әрекет</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Python бағдарламалау</td>
+                                            <td><span class="badge bg-success">95</span></td>
+                                            <td><span class="badge bg-warning">85</span></td>
+                                            <td><span class="badge bg-info">-</span></td>
+                                            <td><span class="badge bg-primary">90</span></td>
+                                            <td><button class="btn btn-sm btn-outline-primary">Толығырақ</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Деректер қоры</td>
+                                            <td><span class="badge bg-success">88</span></td>
+                                            <td><span class="badge bg-success">92</span></td>
+                                            <td><span class="badge bg-info">+5</span></td>
+                                            <td><span class="badge bg-primary">92</span></td>
+                                            <td><button class="btn btn-sm btn-outline-primary">Толығырақ</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Веб-бағдарламалау</td>
+                                            <td><span class="badge bg-warning">78</span></td>
+                                            <td><span class="badge bg-success">85</span></td>
+                                            <td><span class="badge bg-info">-</span></td>
+                                            <td><span class="badge bg-primary">82</span></td>
+                                            <td><button class="btn btn-sm btn-outline-primary">Толығырақ</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Прошлые семестры -->
+                            <h6 class="mt-4 mb-3"><i class="fas fa-history me-2"></i>Алдыңғы семестрлер</h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="info-card">
+                                        <h6>Күз 2024</h6>
+                                        <p class="mb-2"><strong>GPA:</strong> 3.65</p>
+                                        <p class="mb-2"><strong>Кредит:</strong> 30</p>
+                                        <p class="mb-0"><strong>Статус:</strong> Сәтті аяқталды</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info-card">
+                                        <h6>Көктем 2024</h6>
+                                        <p class="mb-2"><strong>GPA:</strong> 3.45</p>
+                                        <p class="mb-2"><strong>Кредит:</strong> 28</p>
+                                        <p class="mb-0"><strong>Статус:</strong> Сәтті аяқталды</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Кесте -->
+                <div id="scheduleContent" class="tab-content" style="display: none;">
+                    <div class="content-card card">
+                        <div class="card-header">
+                            <h6 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Сабақ кестесі</h6>
+                        </div>
+                        <div class="card-body">
+                            <!-- Текущая неделя -->
+                            <h6 class="mb-3"><i class="fas fa-calendar-week me-2"></i>Осы аптаның кестесі</h6>
+                            <div class="table-responsive">
+                                <table class="table table-bordered text-center">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Уақыт</th>
+                                            <th>Дүйсенбі</th>
+                                            <th>Сейсенбі</th>
+                                            <th>Сәрсенбі</th>
+                                            <th>Бейсенбі</th>
+                                            <th>Жұма</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="table-secondary">09:00-10:30</td>
+                                            <td>-</td>
+                                            <td class="bg-primary text-white">Python (ауд. 305)</td>
+                                            <td>-</td>
+                                            <td class="bg-info text-white">Веб-технологии (ауд. 402)</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-secondary">10:45-12:15</td>
+                                            <td class="bg-success text-white">Деректер қоры (ауд. 210)</td>
+                                            <td>-</td>
+                                            <td class="bg-warning text-dark">Комп. желілер (лабор. 101)</td>
+                                            <td>-</td>
+                                            <td class="bg-primary text-white">Python (лабор. 105)</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-secondary">13:00-14:30</td>
+                                            <td>-</td>
+                                            <td class="bg-info text-white">Веб-технологии (лабор. 103)</td>
+                                            <td class="bg-success text-white">Деректер қоры (ауд. 210)</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Ближайшие события -->
+                            <h6 class="mt-4 mb-3"><i class="fas fa-calendar-check me-2"></i>Жақындағы оқиғалар</h6>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Күні</th>
+                                            <th>Уақыт</th>
+                                            <th>Оқиға</th>
+                                            <th>Орын</th>
+                                            <th>Түрі</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>15.05.2025</td>
+                                            <td>14:00-16:00</td>
+                                            <td>Python емтиханы</td>
+                                            <td>Аудитория 305</td>
+                                            <td><span class="badge bg-danger">Емтихан</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>20.05.2025</td>
+                                            <td>10:00-12:00</td>
+                                            <td>Веб-технологиялар жобасы</td>
+                                            <td>Лаборатория 103</td>
+                                            <td><span class="badge bg-warning">Жоба</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>25.05.2025</td>
+                                            <td>09:00-11:00</td>
+                                            <td>Деректер қоры қорғау</td>
+                                            <td>Аудитория 210</td>
+                                            <td><span class="badge bg-info">Қорғау</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Құжаттар -->
+                <div id="documentsContent" class="tab-content" style="display: none;">
+                    <div class="content-card card">
+                        <div class="card-header">
+                            <h6 class="mb-0"><i class="fas fa-file-alt me-2"></i>Академиялық құжаттар</h6>
+                        </div>
+                        <div class="card-body">
+                            <!-- Документы студента -->
+                            <h6 class="mb-3"><i class="fas fa-file-contract me-2"></i>Жеке құжаттар</h6>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Құжат атауы</th>
+                                            <th>Түрі</th>
+                                            <th>Жүктелген күні</th>
+                                            <th>Статус</th>
+                                            <th>Әрекет</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Туу туралы куәлік</td>
+                                            <td>Сканерленген нұсқа</td>
+                                            <td>15.09.2023</td>
+                                            <td><span class="badge bg-success">Расталған</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-download"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Мед. тестілеу куәлігі</td>
+                                            <td>PDF</td>
+                                            <td>20.09.2023</td>
+                                            <td><span class="badge bg-success">Расталған</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-download"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>4x6 фото</td>
+                                            <td>JPG</td>
+                                            <td>10.09.2023</td>
+                                            <td><span class="badge bg-success">Расталған</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-download"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Әскери куәлік</td>
+                                            <td>PDF</td>
+                                            <td>25.11.2024</td>
+                                            <td><span class="badge bg-warning">Тексеруде</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-download"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Академические справки -->
+                            <h6 class="mt-4 mb-3"><i class="fas fa-file-certificate me-2"></i>Академиялық куәліктер</h6>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="info-card text-center">
+                                        <i class="fas fa-file-pdf fa-3x text-danger mb-2"></i>
+                                        <h6>Оқу куәлігі</h6>
+                                        <small class="text-muted">Жаңартылған: 15.04.2025</small>
+                                        <button class="btn btn-sm btn-primary mt-2">
+                                            <i class="fas fa-download me-1"></i> Жүктеу
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="info-card text-center">
+                                        <i class="fas fa-file-invoice-dollar fa-3x text-success mb-2"></i>
+                                        <h6>Төлем куәлігі</h6>
+                                        <small class="text-muted">Күз 2024-2025</small>
+                                        <button class="btn btn-sm btn-primary mt-2">
+                                            <i class="fas fa-download me-1"></i> Жүктеу
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="info-card text-center">
+                                        <i class="fas fa-id-card fa-3x text-primary mb-2"></i>
+                                        <h6>Студент билеті</h6>
+                                        <small class="text-muted">Жарамды: 2025 жылға дейін</small>
+                                        <button class="btn btn-sm btn-primary mt-2">
+                                            <i class="fas fa-download me-1"></i> Жүктеу
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Модальное окно смены аватара -->
+    <div class="modal fade" id="avatarModal" tabindex="-1" aria-labelledby="avatarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="avatarModalLabel">
+                        <i class="fas fa-camera me-2"></i>Профиль суретін өзгерту
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Жабу"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <div id="avatarPreview" class="profile-avatar mx-auto mb-3" style="width: 200px; height: 200px;">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Жаңа сурет" class="w-100 h-100 rounded-circle" id="avatarPreviewImg">
+                        </div>
+                        <p class="text-muted small">Ұсынылған өлшем: 500x500 пиксель</p>
+                    </div>
+                    
+                    <form id="avatarForm">
+                        <div class="mb-3">
+                            <label for="avatarInput" class="form-label">Файлды таңдау</label>
+                            <input class="form-control" type="file" id="avatarInput" accept="image/*">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Немесе үлгілерден таңдаңыз:</label>
+                            <div class="d-flex flex-wrap gap-2">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" 
+                                     class="avatar-option rounded-circle" 
+                                     style="width: 60px; height: 60px; cursor: pointer;"
+                                     data-src="https://randomuser.me/api/portraits/men/32.jpg">
+                                <img src="https://randomuser.me/api/portraits/men/67.jpg" 
+                                     class="avatar-option rounded-circle" 
+                                     style="width: 60px; height: 60px; cursor: pointer;"
+                                     data-src="https://randomuser.me/api/portraits/men/67.jpg">
+                                <img src="https://randomuser.me/api/portraits/men/86.jpg" 
+                                     class="avatar-option rounded-circle" 
+                                     style="width: 60px; height: 60px; cursor: pointer;"
+                                     data-src="https://randomuser.me/api/portraits/men/86.jpg">
+                                <img src="https://randomuser.me/api/portraits/women/65.jpg" 
+                                     class="avatar-option rounded-circle" 
+                                     style="width: 60px; height: 60px; cursor: pointer;"
+                                     data-src="https://randomuser.me/api/portraits/women/65.jpg">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Болдырмау</button>
+                    <button type="button" class="btn btn-primary" id="saveAvatarBtn">Сақтау</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5><i class="fas fa-graduation-cap me-2"></i>UNIVER</h5>
+                    <p class="small">Біз білім берудің сапасын арттыруға және болашақ мамандарды даярлауға баса назар аударамыз.</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Байланыс ақпараты</h5>
+                    <ul class="list-unstyled small">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> Алматы, Тәуелсіздік көшесі 123</li>
+                        <li><i class="fas fa-phone me-2"></i> 8 (727) 123-45-67</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@univer.kz</li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Жүйе туралы</h5>
+                    <p class="small">Бұл студенттер порталының прототипі. Нақты мәліметтер қолжетімді емес.</p>
+                    <div class="small text-muted">
+                        © 2025 UNIVER. Барлық құқықтар қорғалған.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Функция для переключения табов
+        function switchTab(tabId) {
+            // Скрываем все табы
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            
+            // Убираем активный класс со всех кнопок
+            document.querySelectorAll('.profile-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Показываем выбранный таб
+            const activeTab = document.getElementById(tabId + 'Content');
+            if (activeTab) {
+                activeTab.style.display = 'block';
+            }
+            
+            // Активируем кнопку
+            const activeButton = document.querySelector(`[data-tab="${tabId}"]`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+        }
+        
+        // Обработчики для табов
+        document.querySelectorAll('.profile-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                switchTab(tabId);
+            });
+        });
+        
+        // Предпросмотр аватара из файла
+        document.getElementById('avatarInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.querySelector('#avatarPreview img').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Выбор аватара из шаблонов
+        document.querySelectorAll('.avatar-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const newSrc = this.getAttribute('data-src');
+                document.querySelector('#avatarPreview img').src = newSrc;
+                
+                // Выделяем выбранный вариант
+                document.querySelectorAll('.avatar-option').forEach(opt => {
+                    opt.style.border = '2px solid transparent';
+                });
+                this.style.border = '2px solid var(--student-color)';
+            });
+        });
+        
+        // Сохранение аватара
+        document.getElementById('saveAvatarBtn').addEventListener('click', function() {
+            const newAvatarSrc = document.querySelector('#avatarPreview img').src;
+            
+            // Обновляем аватар на странице
+            document.getElementById('profileAvatar').src = newAvatarSrc;
+            
+            // Сохраняем в localStorage
+            localStorage.setItem('student_avatar', newAvatarSrc);
+            
+            // Закрываем модальное окно
+            const modal = bootstrap.Modal.getInstance(document.getElementById('avatarModal'));
+            modal.hide();
+            
+            // Показываем уведомление
+            showNotification('Профиль суреті сәтті өзгертілді!', 'success');
+        });
+        
+        // Загрузка сохраненного аватара при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedAvatar = localStorage.getItem('student_avatar');
+            if (savedAvatar) {
+                document.getElementById('profileAvatar').src = savedAvatar;
+            }
+            
+            // Кнопка редактирования профиля
+            document.getElementById('editProfileBtn')?.addEventListener('click', function() {
+                showNotification('Профильді өңдеу мүмкіндігі жақында қосылады', 'info');
+            });
+            
+            // Навигация
+            const currentPage = 'student_profile.php';
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            
+            // Анимация карточек при загрузке
+            const cards = document.querySelectorAll('.content-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+        
+        // Функция показа уведомлений
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = `
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                min-width: 300px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            `;
+            
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

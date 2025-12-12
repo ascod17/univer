@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="kz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оқу процесі | Бағалар және үлгерім - UNIVER</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --univer-blue: #003366;
+            --univer-dark: #123456;
+            --univer-light: #0056b3;
+            --univer-accent: #e9f2ff;
+            --rk1-color: #2E8B57;
+            --rk2-color: #4682B4;
+            --lab-color: #8A2BE2;
+            --srs-color: #FF8C00;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .top-info-bar {
+            background-color: var(--univer-dark);
+            color: white;
+            padding: 8px 0;
+            font-size: 0.9rem;
+        }
+        
+        .main-navbar {
+            background-color: var(--univer-blue);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: white !important;
+        }
+        
+        .nav-link {
+            color: white !important;
+            padding: 10px 15px !important;
+            margin: 0 2px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .nav-link.active {
+            background-color: var(--univer-light) !important;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 20px 0;
+        }
+        
+        .subject-card {
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+            border: none;
+        }
+        
+        .subject-header {
+            background: linear-gradient(135deg, var(--univer-blue), var(--univer-dark));
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+        }
+        
+        .rating-badge {
+            font-size: 0.9rem;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+        
+        .rk1-badge { background-color: var(--rk1-color); }
+        .rk2-badge { background-color: var(--rk2-color); }
+        .lab-badge { background-color: var(--lab-color); }
+        .srs-badge { background-color: var(--srs-color); }
+        
+        .progress-container {
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .table th {
+            background-color: var(--univer-accent);
+            border-top: none;
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: rgba(0, 51, 102, 0.05);
+        }
+        
+        .grade-cell {
+            font-weight: bold;
+            text-align: center;
+            min-width: 60px;
+        }
+        
+        .grade-excellent { color: #28a745; }
+        .grade-good { color: #17a2b8; }
+        .grade-average { color: #ffc107; }
+        .grade-poor { color: #dc3545; }
+        
+        .footer {
+            background-color: var(--univer-dark);
+            color: white;
+            padding: 20px 0;
+            margin-top: auto;
+        }
+        
+        .semester-tabs {
+            border-bottom: 2px solid #dee2e6;
+            margin-bottom: 25px;
+        }
+        
+        .semester-tab {
+            padding: 10px 25px;
+            border: none;
+            background: none;
+            font-weight: 600;
+            color: #6c757d;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .semester-tab.active {
+            color: var(--univer-light);
+            border-bottom: 3px solid var(--univer-light);
+        }
+        
+        .summary-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-left: 5px solid var(--univer-light);
+        }
+        
+        @media (max-width: 768px) {
+            .table-responsive {
+                font-size: 0.85rem;
+            }
+            
+            .grade-cell {
+                min-width: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Үстіңгі ақпараттық панель -->
+    <div class="top-info-bar">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <i class="fas fa-phone-alt me-1"></i> 8 (727) 123-45-67 | 
+                    <i class="fas fa-envelope ms-3 me-1"></i> <a href="mailto:info@univer.kz" class="text-white">info@univer.kz</a>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <i ></i>  Әл-фараби атындағы Қазақ ұлттық университеті
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Негізгі навигация -->
+    <nav class="navbar navbar-expand-lg main-navbar sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="main.php">
+                <i class="fas fa-graduation-cap me-2"></i>UNIVER
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon">
+                    <i class="fas fa-bars text-white"></i>
+                </span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="main.php">
+                            <i class="fas fa-home me-1"></i> Басты бет
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="oqu_process.html">
+                            <i class="fas fa-book me-1"></i> Оқу процесі
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sabaq_keste.html">
+                            <i class="fas fa-calendar-alt me-1"></i> Кесте
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="otynish.html">
+                            <i class="fas fa-file-alt me-1"></i> Өтініштер
+                        </a>
+                    </li>
+                    
+                </ul>
+                
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle me-1"></i> 
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="students_profile.html"><i class="fas fa-user me-2"></i>Профиль</a></li>
+                            <li><a class="dropdown-item" href="settings.html"><i class="fas fa-cog me-2"></i>Баптаулар</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="logout.php"><i class="fas fa-sign-out-alt me-2"></i>Шығу</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Негізгі мазмұн -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Семестр табы -->
+            <div class="semester-tabs">
+                <button class="semester-tab active" data-semester="1">1-ші семестр</button>
+                <button class="semester-tab" data-semester="2">2-ші семестр</button>
+            </div>
+            
+            <!-- Жалпы статистика -->
+            <div class="alert alert-info summary-card">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h6><i class="fas fa-calculator me-2"></i>Жалпы GPA</h6>
+                        <h3 class="text-primary">3.75</h3>
+                    </div>
+                    <div class="col-md-3">
+                        <h6><i class="fas fa-star me-2"></i>Орташа балл</h6>
+                        <h3 class="text-success">86.4</h3>
+                    </div>
+                    <div class="col-md-3">
+                        <h6><i class="fas fa-check-circle me-2"></i>Аяқталған пәндер</h6>
+                        <h3 class="text-info">6/8</h3>
+                    </div>
+                    <div class="col-md-3">
+                        <h6><i class="fas fa-trophy me-2"></i>Рейтинг</h6>
+                        <h3 class="text-warning">15/120</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Пәндер -->
+            <div id="semester-1-content">
+                <!-- Python бағдарламалау -->
+                <div class="card subject-card">
+                    <div class="card-header subject-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-0"><i class="fas fa-code me-2"></i>Python-да бағдарламалау</h5>
+                            <small class="opacity-75">Доцент Атаниязова А.С. | Кредит: 5</small>
+                        </div>
+                        <div>
+                            <span class="badge rk1-badge me-2">РК1: 88/100</span>
+                            <span class="badge rk2-badge">РК2: 76/100</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <small>Жалпы прогресс</small>
+                                <small><strong>82%</strong></small>
+                            </div>
+                            <div class="progress-container bg-light">
+                                <div class="progress-bar bg-success" style="width: 82%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-hover table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Тапсырма түрі</th>
+                                        <th>Атауы</th>
+                                        <th>Апта</th>
+                                        <th>Макс. балл</th>
+                                        <th>Алынған балл</th>
+                                        <th>Күні</th>
+                                        <th>Статус</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="badge lab-badge">Зертханалық</span></td>
+                                        <td>Тізімдермен жұмыс</td>
+                                        <td>3</td>
+                                        <td>10</td>
+                                        <td class="grade-cell grade-excellent">8</td>
+                                        <td>25.09.2025</td>
+                                        <td><span class="badge bg-success">Өтті</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge lab-badge">Зертханалық</span></td>
+                                        <td>Сөздіктер мен жиындар</td>
+                                        <td>4</td>
+                                        <td>10</td>
+                                        <td class="grade-cell grade-excellent">8</td>
+                                        <td>03.10.2025</td>
+                                        <td><span class="badge bg-success">Өтті</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge srs-badge">БӨЖ</span></td>
+                                        <td>Функцияларды қолдану</td>
+                                        <td>5</td>
+                                        <td>30</td>
+                                        <td class="grade-cell grade-excellent">30</td>
+                                        <td>03.10.2025</td>
+                                        <td><span class="badge bg-success">Өтті</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge lab-badge">Зертханалық</span></td>
+                                        <td>Функцияларды жасау</td>
+                                        <td>6</td>
+                                        <td>10</td>
+                                        <td class="grade-cell grade-good">7</td>
+                                        <td>10.10.2025</td>
+                                        <td><span class="badge bg-success">Өтті</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge lab-badge">Зертханалық</span></td>
+                                        <td>Класс пен объектілер</td>
+                                        <td>7</td>
+                                        <td>10</td>
+                                        <td class="grade-cell grade-good">8</td>
+                                        <td>17.10.2025</td>
+                                        <td><span class="badge bg-success">Өтті</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge srs-badge">БӨЖ</span></td>
+                                        <td>Нәтижелерді талдау</td>
+                                        <td>8</td>
+                                        <td>30</td>
+                                        <td class="grade-cell grade-good">21</td>
+                                        <td>17.10.2025</td>
+                                        <td><span class="badge bg-success">Өтті</span></td>
+                                    </tr>
+                                    <tr class="table-info">
+                                        <td colspan="3"><strong>1-ші рубеж (РК1)</strong></td>
+                                        <td><strong>100</strong></td>
+                                        <td class="grade-cell"><strong>88</strong></td>
+                                        <td>7-8 апта</td>
+                                        <td><span class="badge bg-primary">Өтті</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge lab-badge">Зертханалық</span></td>
+                                        <td>Мұрагерлік</td>
+                                        <td>9</td>
+                                        <td>10</td>
+                                        <td class="grade-cell grade-poor">ж/к</td>
+                                        <td>31.10.2025</td>
+                                        <td><span class="badge bg-danger">Жіберілді</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge lab-badge">Зертханалық</span></td>
+                                        <td>Файлдармен жұмыс</td>
+                                        <td>10</td>
+                                        <td>10</td>
+                                        <td class="grade-cell grade-average">5</td>
+                                        <td>07.11.2025</td>
+                                        <td><span class="badge bg-success">Өтті</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge lab-badge">Зертханалық</span></td>
+                                        <td>Ерекше жағдайлар</td>
+                                        <td>11</td>
+                                        <td>10</td>
+                                        <td class="grade-cell grade-average">5</td>
+                                        <td>14.11.2025</td>
+                                        <td><span class="badge bg-success">Өтті</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge lab-badge">Зертханалық</span></td>
+                                        <td>Кітапханаларды қолдану</td>
+                                        <td>12</td>
+                                        <td>10</td>
+                                        <td class="grade-cell grade-average">5</td>
+                                        <td>21.11.2025</td>
+                                        <td><span class="badge bg-success">Өтті</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge srs-badge">БӨЖ</span></td>
+                                        <td>Соңғы жоба</td>
+                                        <td>12</td>
+                                        <td>30</td>
+                                        <td class="grade-cell grade-excellent">28</td>
+                                        <td>21.11.2025</td>
+                                        <td><span class="badge bg-success">Өтті</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge lab-badge">Зертханалық</span></td>
+                                        <td>Тізім түсіндіру</td>
+                                        <td>13</td>
+                                        <td>10</td>
+                                        <td class="grade-cell grade-average">5</td>
+                                        <td>01.12.2025</td>
+                                        <td><span class="badge bg-success">Өтті</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge lab-badge">Зертханалық</span></td>
+                                        <td>Декораторлар</td>
+                                        <td>14</td>
+                                        <td>10</td>
+                                        <td class="grade-cell grade-average">5</td>
+                                        <td>05.12.2025</td>
+                                        <td><span class="badge bg-success">Өтті</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge srs-badge">БӨЖ</span></td>
+                                        <td>Соңғы есеп</td>
+                                        <td>14</td>
+                                        <td>30</td>
+                                        <td class="grade-cell grade-good">23</td>
+                                        <td>05.12.2025</td>
+                                        <td><span class="badge bg-success">Өтті</span></td>
+                                    </tr>
+                                    <tr class="table-info">
+                                        <td colspan="3"><strong>2-ші рубеж (РК2)</strong></td>
+                                        <td><strong>100</strong></td>
+                                        <td class="grade-cell"><strong>76</strong></td>
+                                        <td>13-14 апта</td>
+                                        <td><span class="badge bg-primary">Өтті</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Деректер қоры жүйелерін құру -->
+                <div class="card subject-card">
+                    <div class="card-header subject-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-0"><i class="fas fa-database me-2"></i>Деректер қоры жүйелерін құру</h5>
+                            <small class="opacity-75">Доцент Муханбет А.А. | Кредит: 5</small>
+                        </div>
+                        <div>
+                            <span class="badge rk1-badge me-2">РК1: 90/100</span>
+                            <span class="badge rk2-badge">РК2: 57/100</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <small>Жалпы прогресс</small>
+                                <small><strong>73.5%</strong></small>
+                            </div>
+                            <div class="progress-container bg-light">
+                                <div class="progress-bar bg-info" style="width: 73.5%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-hover table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Тапсырма түрі</th>
+                                        <th>Атауы</th>
+                                        <th>Апта</th>
+                                        <th>Балл</th>
+                                        <th>Алынған</th>
+                                        <th>Күні</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="badge lab-badge">Зертханалық</span></td>
+                                        <td>SQL CREATE, INSERT</td>
+                                        <td>5</td>
+                                        <td>15</td>
+                                        <td class="grade-cell grade-excellent">15</td>
+                                        <td>03.10.2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge srs-badge">БӨЖ</span></td>
+                                        <td>ER-диаграмма</td>
+                                        <td>5</td>
+                                        <td>18</td>
+                                        <td class="grade-cell grade-good">18</td>
+                                        <td>03.10.2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge lab-badge">Зертханалық</span></td>
+                                        <td>SELECT, WHERE</td>
+                                        <td>6</td>
+                                        <td>13</td>
+                                        <td class="grade-cell grade-excellent">13</td>
+                                        <td>10.10.2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge lab-badge">Зертханалық</span></td>
+                                        <td>JOIN операциялары</td>
+                                        <td>7</td>
+                                        <td>15</td>
+                                        <td class="grade-cell grade-excellent">15</td>
+                                        <td>17.10.2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge srs-badge">БӨЖ</span></td>
+                                        <td>Нормализация</td>
+                                        <td>7</td>
+                                        <td>17</td>
+                                        <td class="grade-cell grade-excellent">17</td>
+                                        <td>17.10.2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge lab-badge">Зертханалық</span></td>
+                                        <td>GROUP BY, HAVING</td>
+                                        <td>8</td>
+                                        <td>12</td>
+                                        <td class="grade-cell grade-excellent">12</td>
+                                        <td>23.10.2025</td>
+                                    </tr>
+                                    <tr class="table-info">
+                                        <td colspan="3"><strong>РК1 қорытындысы</strong></td>
+                                        <td><strong>100</strong></td>
+                                        <td class="grade-cell"><strong>90</strong></td>
+                                        <td>8-апта</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge lab-badge">Зертханалық</span></td>
+                                        <td>Транзакциялар</td>
+                                        <td>10</td>
+                                        <td>8</td>
+                                        <td class="grade-cell grade-good">8</td>
+                                        <td>07.11.2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge lab-badge">Зертханалық</span></td>
+                                        <td>Процедуралар</td>
+                                        <td>11</td>
+                                        <td>10</td>
+                                        <td class="grade-cell grade-excellent">10</td>
+                                        <td>14.11.2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge lab-badge">Зертханалық</span></td>
+                                        <td>Триггерлер</td>
+                                        <td>12</td>
+                                        <td>8</td>
+                                        <td class="grade-cell grade-good">8</td>
+                                        <td>21.11.2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge srs-badge">БӨЖ</span></td>
+                                        <td>Жобаны қорғау</td>
+                                        <td>13</td>
+                                        <td>13</td>
+                                        <td class="grade-cell grade-average">13</td>
+                                        <td>21.11.2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge lab-badge">Зертханалық</span></td>
+                                        <td>Оңтайландыру</td>
+                                        <td>13</td>
+                                        <td>9</td>
+                                        <td class="grade-cell grade-good">9</td>
+                                        <td>28.11.2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge lab-badge">Зертханалық</span></td>
+                                        <td>Репликация</td>
+                                        <td>14</td>
+                                        <td>9</td>
+                                        <td class="grade-cell grade-good">9</td>
+                                        <td>05.12.2025</td>
+                                    </tr>
+                                    <tr class="table-info">
+                                        <td colspan="3"><strong>РК2 қорытындысы</strong></td>
+                                        <td><strong>100</strong></td>
+                                        <td class="grade-cell"><strong>57</strong></td>
+                                        <td>14-апта</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Компьютерлік желілер -->
+                <div class="card subject-card">
+                    <div class="card-header subject-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-0"><i class="fas fa-network-wired me-2"></i>Компьютерлік желілер</h5>
+                            <small class="opacity-75">Оқытушы Максутова Б.А. | Кредит: 5</small>
+                        </div>
+                        <div>
+                            <span class="badge rk1-badge me-2">РК1: 92/100</span>
+                            <span class="badge rk2-badge">РК2: 54/100</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h6>Зертханалық жұмыстар:</h6>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Желілік кабель қосу</span>
+                                        <span class="badge bg-success">7/10</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>IP конфигурациясы</span>
+                                        <span class="badge bg-success">16/20</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Маршрутизация</span>
+                                        <span class="badge bg-warning">13/20</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>БӨЖ тапсырмалары:</h6>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Желі схемасы</span>
+                                        <span class="badge bg-danger">ж/к</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Конфигурация есебі</span>
+                                        <span class="badge bg-danger">ж/к</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Протоколдар талдау</span>
+                                        <span class="badge bg-success">10/20</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Қауіпсіздік</span>
+                                        <span class="badge bg-success">3/10</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>Ескерту:</strong> 2 БӨЖ тапсырмасы жіберілді. Соңғы аптада жасауға болады.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Басқа пәндердің қысқаша тізімі -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h6><i class="fas fa-calculator me-2"></i>Есептеу әдістері</h6>
+                                <div class="d-flex justify-content-between">
+                                    <span>РК1/РК2:</span>
+                                    <span><strong>91/46</strong></span>
+                                </div>
+                                <div class="progress mt-2">
+                                    <div class="progress-bar" style="width: 68.5%">68.5%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h6><i class="fas fa-server me-2"></i>Параллельді есептеулер</h6>
+                                <div class="d-flex justify-content-between">
+                                    <span>РК1/РК2:</span>
+                                    <span><strong>83/61</strong></span>
+                                </div>
+                                <div class="progress mt-2">
+                                    <div class="progress-bar" style="width: 72%">72%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Баллдарды есептеу туралы ақпарат -->
+                <div class="card mt-4">
+                    <div class="card-header bg-light">
+                        <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i>Бағалау жүйесі туралы</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h6>Балл диапазондары:</h6>
+                                <ul class="list-unstyled">
+                                    <li><span class="grade-excellent">●</span> 90-100: Өте жақсы (A)</li>
+                                    <li><span class="grade-good">●</span> 75-89: Жақсы (B)</li>
+                                    <li><span class="grade-average">●</span> 60-74: Қанағаттанарлық (C)</li>
+                                    <li><span class="grade-poor">●</span> 0-59: Қанағаттанарлықсыз (F)</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4">
+                                <h6>Тапсырма түрлері:</h6>
+                                <ul class="list-unstyled">
+                                    <li><span class="badge lab-badge">Зертханалық</span> - Практикалық жұмыс</li>
+                                    <li><span class="badge srs-badge">БӨЖ</span> - Өзін-өзі жұмыстау</li>
+                                    <li><span class="badge rk1-badge">РК1</span> - 7-8 аптада</li>
+                                    <li><span class="badge rk2-badge">РК2</span> - 13-14 аптада</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4">
+                                <h6>Қорытынды баға:</h6>
+                                <p>Әр пән үшін қорытынды баға мына формула бойынша есептеледі:</p>
+                                <p><strong>(РК1 × 0.4) + (РК2 × 0.4) + (Қатысу × 0.2)</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 2-ші семестр (бастапқыда жасырын) -->
+            <div id="semester-2-content" style="display: none;">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    2-ші семестрдің бағалары әлі енгізілген жоқ. Олар 2026 жылдың қаңтарында қолжетімді болады.
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5><i class="fas fa-graduation-cap me-2"></i>UNIVER</h5>
+                    <p class="small">Білім берудің сапасын арттыруға баса назар аударамыз.</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Байланыс</h5>
+                    <ul class="list-unstyled small">
+                       

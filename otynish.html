@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="kz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Өтініштер | E-қызметтер - UNIVER</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --univer-blue: #003366;
+            --univer-dark: #123456;
+            --univer-light: #0056b3;
+            --univer-accent: #e9f2ff;
+            --pending-color: #ffc107;
+            --approved-color: #28a745;
+            --rejected-color: #dc3545;
+            --processing-color: #17a2b8;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .top-info-bar {
+            background-color: var(--univer-dark);
+            color: white;
+            padding: 8px 0;
+            font-size: 0.9rem;
+        }
+        
+        .main-navbar {
+            background-color: var(--univer-blue);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: white !important;
+        }
+        
+        .nav-link {
+            color: white !important;
+            padding: 10px 15px !important;
+            margin: 0 2px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .nav-link.active {
+            background-color: var(--univer-light) !important;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 20px 0;
+        }
+        
+        .service-card {
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 15px;
+            border: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-right: 15px;
+        }
+        
+        .icon-academic { background: linear-gradient(135deg, #6f42c1, #8a2be2); }
+        .icon-document { background: linear-gradient(135deg, #20c997, #28a745); }
+        .icon-housing { background: linear-gradient(135deg, #fd7e14, #ffc107); }
+        .icon-finance { background: linear-gradient(135deg, #dc3545, #e83e8c); }
+        .icon-military { background: linear-gradient(135deg, #17a2b8, #20c997); }
+        .icon-other { background: linear-gradient(135deg, #6c757d, #495057); }
+        
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .status-pending { background-color: var(--pending-color); color: #000; }
+        .status-approved { background-color: var(--approved-color); color: white; }
+        .status-rejected { background-color: var(--rejected-color); color: white; }
+        .status-processing { background-color: var(--processing-color); color: white; }
+        
+        .application-table th {
+            background-color: var(--univer-accent);
+            color: var(--univer-dark);
+            font-weight: 600;
+            border-top: none;
+        }
+        
+        .application-table tbody tr:hover {
+            background-color: rgba(0, 51, 102, 0.05);
+        }
+        
+        .filter-tabs {
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .filter-btn {
+            padding: 8px 20px;
+            border: none;
+            background: none;
+            color: #6c757d;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn.active {
+            background-color: var(--univer-light);
+            color: white;
+        }
+        
+        .footer {
+            background-color: var(--univer-dark);
+            color: white;
+            padding: 20px 0;
+            margin-top: auto;
+        }
+        
+        .service-category {
+            font-size: 0.75rem;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .service-card {
+                margin-bottom: 10px;
+            }
+            
+            .service-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+                margin-right: 10px;
+            }
+            
+            .filter-tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .filter-btn {
+                padding: 6px 15px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #6c757d;
+        }
+        
+        .create-application-btn {
+            background: linear-gradient(135deg, var(--univer-blue), var(--univer-dark));
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .create-application-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 51, 102, 0.3);
+        }
+        
+        .modal-service-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .modal-service-item {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .modal-service-item:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <!-- Үстіңгі ақпараттық панель -->
+    <div class="top-info-bar">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <i class="fas fa-phone-alt me-1"></i> 8 (727) 123-45-67 | 
+                    <i class="fas fa-envelope ms-3 me-1"></i> <a href="mailto:info@univer.kz" class="text-white">info@univer.kz</a>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <i ></i>  Әл-фараби атындағы Қазақ ұлттық университеті
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Негізгі навигация -->
+    <nav class="navbar navbar-expand-lg main-navbar sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="main.php">
+                <i class="fas fa-graduation-cap me-2"></i>UNIVER
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon">
+                    <i class="fas fa-bars text-white"></i>
+                </span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="main.php">
+                            <i class="fas fa-home me-1"></i> Басты бет
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="oqu_process.html">
+                            <i class="fas fa-book me-1"></i> Оқу процесі
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sabaq_keste.html">
+                            <i class="fas fa-calendar-alt me-1"></i> Кесте
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="otynish.html">
+                            <i class="fas fa-file-alt me-1"></i> Өтініштер
+                        </a>
+                    </li>
+                   
+                </ul>
+                
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle me-1"></i> 
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="students_profile.html"><i class="fas fa-user me-2"></i>Профиль</a></li>
+                            <li><a class="dropdown-item" href="settings.html"><i class="fas fa-cog me-2"></i>Баптаулар</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="logout.php"><i class="fas fa-sign-out-alt me-2"></i>Шығу</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Негізгі мазмұн -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Жетекші панель -->
+            <div class="row mb-4">
+                <div class="col-md-8">
+                    <h4><i class="fas fa-file-contract me-2"></i>Өтініштер және E-қызметтер</h4>
+                    <p class="text-muted">Студенттерге арналған барлық электрондық қызметтер</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <button class="btn create-application-btn" data-bs-toggle="modal" data-bs-target="#createApplicationModal">
+                        <i class="fas fa-plus-circle me-2"></i>Жаңа өтініш беру
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Фильтр табы -->
+            <div class="filter-tabs">
+                <div class="d-flex flex-wrap gap-2">
+                    <button class="filter-btn active" data-filter="all">Барлығы</button>
+                    <button class="filter-btn" data-filter="pending">
+                        <i class="fas fa-clock me-1"></i>Күтілуде
+                    </button>
+                    <button class="filter-btn" data-filter="approved">
+                        <i class="fas fa-check-circle me-1"></i>Қабылданған
+                    </button>
+                    <button class="filter-btn" data-filter="processing">
+                        <i class="fas fa-cog me-1"></i>Өңделуде
+                    </button>
+                    <button class="filter-btn" data-filter="rejected">
+                        <i class="fas fa-times-circle me-1"></i>Қабылданбаған
+                    </button>
+                    <button class="filter-btn" data-filter="academic">
+                        <i class="fas fa-graduation-cap me-1"></i>Академиялық
+                    </button>
+                    <button class="filter-btn" data-filter="document">
+                        <i class="fas fa-file-alt me-1"></i>Құжаттар
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Өтініштер статистикасы -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">5</h5>
+                            <p class="card-text text-muted">Барлық өтініштер</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title text-warning">2</h5>
+                            <p class="card-text text-muted">Күтілуде</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title text-success">2</h5>
+                            <p class="card-text text-muted">Қабылданған</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title text-danger">1</h5>
+                            <p class="card-text text-muted">Қабылданбаған</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Соңғы өтініштер -->
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-history me-2"></i>Соңғы өтініштер</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover application-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th>Өтініш түрі</th>
+                                    <th>Берілген күні</th>
+                                    <th>Статус</th>
+                                    <th>Өңдеуші</th>
+                                    <th>Әрекеттер</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#2025-001</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="service-icon icon-document">
+                                                <i class="fas fa-file-certificate"></i>
+                                            </div>
+                                            <div>
+                                                <div class="service-category">ҚҰЖАТТАР</div>
+                                                <strong>Оқу туралы анықтама</strong>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>05.12.2025</td>
+                                    <td>
+                                        <span class="status-badge status-approved">
+                                            <i class="fas fa-check-circle me-1"></i>Қабылданған
+                                        </span>
+                                    </td>
+                                    <td>Әбуова А.К.</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-eye me-1"></i>Қарау
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#2025-002</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="service-icon icon-academic">
+                                                <i class="fas fa-graduation-cap"></i>
+                                            </div>
+                                            <div>
+                                                <div class="service-category">АКАДЕМИЯЛЫҚ</div>
+                                                <strong>Академиялық демалысқа кету</strong>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>01.12.2025</td>
+                                    <td>
+                                        <span class="status-badge status-pending">
+                                            <i class="fas fa-clock me-1"></i>Күтілуде
+                                        </span>
+                                    </td>
+                                    <td>Қабылбаев Д.М.</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-eye me-1"></i>Қарау
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#2025-003</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="service-icon icon-housing">
+                                                <i class="fas fa-home"></i>
+                                            </div>
+                                            <div>
+                                                <div class="service-category">ТҰРҒЫН</div>
+                                                <strong>Жатақханаға сұраным</strong>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>25.11.2025</td>
+                                    <td>
+                                        <span class="status-badge status-processing">
+                                            <i class="fas fa-cog me-1"></i>Өңделуде
+                                        </span>
+                                    </td>
+                                    <td>Тұрсынбаев Б.С.</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-eye me-1"></i>Қарау
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#2025-004</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="service-icon icon-finance">
+                                                <i class="fas fa-money-bill-wave"></i>
+                                            </div>
+                                            <div>
+                                                <div class="service-category">ҚАРЖЫ</div>
+                                                <strong>Академиялық қарыздарды жою</strong>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>20.11.2025</td>
+                                    <td>
+                                        <span class="status-badge status-rejected">
+                                            <i class="fas fa-times-circle me-1"></i>Қабылданбаған
+                                        </span>
+                                    </td>
+                                    <td>Сәтбаев А.Р.</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-danger">
+                                            <i class="fas fa-redo me-1"></i>Қайта жіберу
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#2025-005</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="service-icon icon-document">
+                                                <i class="fas fa-passport"></i>
+                                            </div>
+                                            <div>
+                                                <div class="service-category">ҚҰЖАТТАР</div>
+                                                <strong>Жеке мәліметтерді өзгерту</strong>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>15.11.2025</td>
+                                    <td>
+                                        <span class="status-badge status-approved">
+                                            <i class="fas fa-check-circle me-1"></i>Қабылданған
+                                        </span>
+                                    </td>
+                                    <td>Әбуова А.К.</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-eye me-1"></i>Қарау
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Қолжетімді қызметтер -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0"><i class="fas fa-list-alt me-2"></i>Қолжетімді E-қызметтер</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <!-- Академиялық қызметтер -->
+                                <div class="col-md-6 mb-3">
+                                    <div class="card service-card" onclick="showServiceDetails(1)">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center">
+                                                <div class="service-icon icon-academic">
+                                                    <i class="fas fa-graduation-cap"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="service-category">АКАДЕМИЯЛЫҚ</div>
+                                                    <h6 class="mb-1">Академиялық демалысқа кету</h6>
+                                                    <p class="text-muted mb-0 small">Грант иегерлері үшін</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <div class="card service-card" onclick="showServiceDetails(2)">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center">
+                                                <div class="service-icon icon-academic">
+                                                    <i class="fas fa-university"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="service-category">АКАДЕМИЯЛЫҚ</div>
+                                                    <h6 class="mb-1">Академиялық демалыстан оралу</h6>
+                                                    <p class="text-muted mb-0 small">Оқуға қайта түсу</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Құжаттар -->
+                                <div class="col-md-6 mb-3">
+                                    <div class="card service-card" onclick="showServiceDetails(3)">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center">
+                                                <div class="service-icon icon-document">
+                                                    <i class="fas fa-file-certificate"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="service-category">ҚҰЖАТТАР</div>
+                                                    <h6 class="mb-1">Оқу туралы анықтама</h6>
+                                                    <p class="text-muted mb-0 small">Ресми құжат</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <div class="card service-card" onclick="showServiceDetails(4)">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center">
+                                                <div class="service-icon icon-document">
+                                                    <i class="fas fa-user-edit"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="service-category">ҚҰЖАТТАР</div>
+                                                    <h6 class="mb-1">Жеке мәліметтерді өзгерту</h6>
+                                                    <p class="text-muted mb-0 small">Деректерді жаңарту</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Тұрғын үй -->
+                                <div class="col-md-6 mb-3">
+                                    <div class="card service-card" onclick="showServiceDetails(5)">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center">
+                                                <div class="service-icon icon-housing">
+                                                    <i class="fas fa-home"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="service-category">ТҰРҒЫН</div>
+                                                    <h6 class="mb-1">Жатақханаға сұраным</h6>
+                                                    <p class="text-muted mb-0 small">Тұрақ орнына өтініш</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Қаржы -->
+                                <div class="col-md-6 mb-3">
+                                    <div class="card service-card" onclick="showServiceDetails(6)">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center">
+                                                <div class="service-icon icon-finance">
+                                                    <i class="fas fa-money-bill-wave"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="service-category">ҚАРЖЫ</div>
+                                                    <h6 class="mb-1">Академиялық қарыздарды жою</h6>
+                                                    <p class="text-muted mb-0 small">Қарыздарды төлеу</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Әскери есеп -->
+                                <div class="col-md-6 mb-3">
+                                    <div class="card service-card" onclick="showServiceDetails(7)">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center">
+                                                <div class="service-icon icon-military">
+                                                    <i class="fas fa-shield-alt"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="service-category">ӘСКЕРІ</div>
+                                                    <h6 class="mb-1">Әскерге шақырылу</h6>
+                                                    <p class="text-muted mb-0 small">Әскери есепке алу</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Басқа қызметтер -->
+                                <div class="col-md-6 mb-3">
+                                    <div class="card service-card" onclick="showServiceDetails(8)">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center">
+                                                <div class="service-icon icon-other">
+                                                    <i class="fas fa-exchange-alt"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="service-category">БАСҚА</div>
+                                                    <h6 class="mb-1">Транскрипт беру</h6>
+                                                    <p class="text-muted mb-0 small">Бағалар туралы құжат</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Өтініш беру туралы ақпарат -->
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i>Өтініш беру ережелері</h6>
+                        </div>
+                        <div class="card-body">
+                            <ul class="mb-0">
+                                <li class="mb-2">Өтініштер тек студенттік портал арқылы қабылданады</li>
+                                <li class="mb-2">Өтініштің өңделу мерзімі 3-10 жұмыс күні</li>
+                                <li class="mb-2">Қажетті құжаттарды сканерленген түрде тіркеу керек</li>
+                                <li class="mb-2">Статусты "Менің өтініштерім" бөлімінде қараңыз</li>
+                                <li>Сұрақтар болса, деканатқа хабарласыңыз</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0"><i class="fas fa-question-circle me-2"></i>Жиі қойылатын сұрақтар</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="accordion" id="faqAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                            Өтініш қанша уақытта өңделеді?
+                                        </button>
+                                    </h2>
+                                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            Өтініштің өңделу мерзімі 3-10 жұмыс күні. Күрделі өтініштер көбірек уақыт алады.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                            Қандай құжаттар қажет?
+                                        </button>
+                                    </h2>
+                                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            Әр өтініш түрі үшін қажетті құжаттар тізімі өтініш беру кезінде көрсетіледі.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5><i class="fas fa-graduation-cap me-2"></i>UNIVER</h5>
+                    <p class="small">Білім берудің сапасын арттыруға баса назар аударамыз.</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Байланыс</h5>
+                    <ul class="list-unstyled small">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> Алматы, Тәуелсіздік көшесі 123</li>
+                        <li><i class="fas fa-phone me-2"></i> 8 (727) 123-45-67</li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Жүйе туралы</h5>
+                    <p class="small">Студенттер порталының прототипі.</p>
+                    <div class="small">
+                        © 2025 UNIVER. Барлық құқықтар қорғалған.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Жаңа өтініш беру модалдық терезесі -->
+    <div class="modal fade" id="createApplicationModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-plus-circle me-2"></i>Жаңа өтініш беру</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <input type="text" class="form-control" placeholder="Қызметті іздеу..." id="serviceSearch">
+                    </div>
+                    
+                    <div class="modal-service-list">
+                        <div class="modal-service-item" onclick="selectService('Академиялық демалысқа кету')">
+                            <h6>Академиялық демалысқа кету</h6>
+                            <p class="small text-muted mb-0">Грант иегерлері үшін</p>
+                        </div>
+                        <div class="modal-service-item" onclick="selectService('Оқу туралы анықтама')">
+                            <h6>Оқу туралы анықтама</h6>
+                            <p class="small text-muted mb-0">Ресми құжат</p>
+                        </div>
+                        <div class="modal-service-item" onclick="selectService('Жеке мәліметтерді өзгерту')">
+                            <h6>Жеке мәліметтерді өзгерту</h6>
+                            <p class="small text-muted mb-0">Деректерді жаңарту</p>
+                        </div>
+                        <div class="modal-service-item" onclick="selectService('Жатақханаға сұраным')">
+                            <h6>Жатақханаға сұраным</h6>
+                            <p class="small text-muted mb-0">Тұрақ орнына өтініш</p>
+                        </div>
+                        <div class="modal-service-item" onclick="selectService('Академиялық қарыздарды жою')">
+                            <h6>Академиялық қарыздарды жою</h6>
+                            <p class="small text-muted mb-0">Қарыздарды төлеу</p>
+                        </div>
+                        <div class="modal-service-item" onclick="selectService('Транскрипт беру')">
+                            <h6>Транскрипт беру</h6>
+                            <p class="small text-muted mb-0">Бағалар туралы құжат</p>
+                       

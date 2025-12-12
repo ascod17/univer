@@ -1,0 +1,15 @@
+<?php
+$servername = "localhost"; // Или 127.0.0.1
+$username = "root";       // Стандартный логин MAMP
+$password = "root";       // Стандартный пароль MAMP (может быть пустым '')
+$dbname = "univer_db";
+
+// Создание соединения
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Проверка соединения
+if ($conn->connect_error) {
+    die("Ошибка подключения: " . $conn->connect_error);
+}
+// echo "Соединение успешно установлено";
+?>
